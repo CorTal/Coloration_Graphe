@@ -11,9 +11,9 @@ Coloration_Graphe_QT::Coloration_Graphe_QT() : G(), M(), oG()
     cb_selAlgo = new QComboBox();
     cb_selAlgo->addItem(QString::fromUtf8("NoN"));
     cb_selAlgo->addItem(QString::fromUtf8("Glouton"));
-    cb_selAlgo->addItem(QString::fromUtf8("Glouton largeur"));
-    cb_selAlgo->addItem(QString::fromUtf8("Glouton degré"));
-    cb_selAlgo->addItem(QString::fromUtf8("Glouton profondeur"));
+    cb_selAlgo->addItem(QString::fromUtf8("Glouton_largeur"));
+    cb_selAlgo->addItem(QString::fromUtf8("Glouton_degre"));
+    cb_selAlgo->addItem(QString::fromUtf8("Glouton_profondeur"));
     cb_selAlgo->addItem(QString::fromUtf8("Welsh_Powell"));
     cb_selAlgo->addItem(QString::fromUtf8("DSATUR"));
     pb_exec = new QPushButton(QString::fromUtf8("Exécuter"));
@@ -122,13 +122,22 @@ void Coloration_Graphe_QT::exportTxt()
   txt = txt.erase(txt.find_last_of(" "),txt.npos);
   std::string stdfile = le_selectedFile->text().toStdString();
   stdfile = stdfile.erase(0, stdfile.find_last_of("/")+1);
+  if(!QDir().exists("Results")){
+    QDir().mkdir("Results");
+  }
+  stdfile.pop_back();
+  stdfile.pop_back();
+  stdfile.pop_back();
+  stdfile.pop_back();
   QString qfile = QString::fromStdString(stdfile);
-   QString filename=cb_selAlgo->currentText() + "_result_"+qfile;
-   qDebug() << filename;
+  if(!QDir().exists("Results/"+qfile)){
+    QDir().mkdir("Results/"+qfile);
+  }
+  
+   QString filename="Results/"+qfile+"/"+cb_selAlgo->currentText() + "_result.txt";
     QFile file( filename );
   if ( file.open(QIODevice::ReadWrite) )
   {
-    qDebug() << "coucou";
     QTextStream stream( &file );
     stream << QString::fromStdString(txt) << endl;
   }
