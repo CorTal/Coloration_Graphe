@@ -1,25 +1,11 @@
-#include "Moteur.h"
-#include "ctime"
+#include <QtGui/QApplication>
+#include "Coloration_Graphe_QT.h"
 
-using namespace std;
 
-int main(int argc, char **argv) {
-  string sg = "/home/etudiant/projects/Coloration_Graphe/Graphe/r250_5.txt";
-  
-  Graphe G;
-  G.set_graphe(sg);
-  
-  Moteur M(G);
-//   M.Glouton();
-//   M.Glouton_degre();
-//   M.Glouton_largeur();
-//   M.Glouton_profondeur();
-//   M.Welsh_Powell();
-//   M.DSATUR();
-   double duration;
-   clock_t start;
-   start = clock();
-   M.NoN();
-   duration = (std::clock() - start) / (double) CLOCKS_PER_SEC;
-   cout << "temps pour exécution : " << duration << endl;
+int main(int argc, char** argv)
+{
+    QApplication app(argc, argv);
+    Coloration_Graphe_QT coloration_graphe_qt;
+    coloration_graphe_qt.show();
+    return app.exec();
 }
